@@ -4,14 +4,20 @@
  */
 package advancedlevel;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  *
@@ -41,19 +47,17 @@ public class AddSubject extends javax.swing.JFrame {
     private void updateCombo() {
 
         this.jComboBox1.removeAllItems();
-        try {
-            Statement stmnt2 = con.createStatement();
-            ResultSet sclList = stmnt2.executeQuery("select field_name from field"); //to get field list to add in combo box
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
 
-            while (sclList.next()) {
-                this.jComboBox1.addItem(sclList.getString(1));          //adding filds to combo box
-
-            }
-
-
-        } catch (SQLException ex) {
-            Logger.getLogger(SchoolEdit.class.getName()).log(Level.SEVERE, null, ex);
+        List result = session.createQuery("from Field").list();
+        for (Field dis : (List<Field>) result) {
+            this.jComboBox1.addItem(dis.getFieldName());
         }
+
+        session.getTransaction().commit();
+        session.close();
     }
 
     /**
@@ -197,53 +201,81 @@ public class AddSubject extends javax.swing.JFrame {
         String name = jTextField1.getText();
         String field = (String) jComboBox1.getSelectedItem();
         
-       byte a ;
+       byte a[]= new byte[1];
         if (jRadioButton1.isSelected()) {
-            a = 1;
+            a[0] = 1;
         } else {
-            a = 0;
+            a[0] = 0;
             
         }
-        if (name != null) {
-            try {
-                Statement stmnt1 = con.createStatement();
-                ResultSet result1 = stmnt1.executeQuery("select count(subject_id) from subject");
-                if (result1.next()) {
-                    String count = result1.getString("count(subject_id)");
-                    
-                    String key = name;
-                    count = (Integer.parseInt(count) + 1) + "";
-                    key = key + count;
-                    
-                    String sql ="INSERT into subject VALUES"+"(?,?,?,?)";
-                    String sql1 = "SELECT subject_name from subject WHERE subject_name=?";
+        if(name.isEmpty()==false){
+            
+            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            
+            Query query = session.createQuery("from Subject where subjectName = :code ");
+            query.setParameter("code",name);
+            List result1 = query.list();
+            if(((List<Field>) result1).isEmpty()){
                 
-                PreparedStatement pre=con.prepareStatement(sql);
-                PreparedStatement pre1=con.prepareStatement(sql1);
+                List result = session.createQuery("from Subject").list();
+                String count = (((List<Subject>) result).size() + 1) + "";
                 
-                pre1.setString(1,name);
-                ResultSet names = pre1.executeQuery();
-                if(names.next()==false){
-                    pre.setString(1,key);
-                    pre.setString(2,name);
-                    pre.setByte(3, a);
-                    pre.setString(4,field);
-                    pre.executeUpdate();
-                    this.jTextField1.setText("  ");
-                    jLabel6.setText("Submit sccessful");
-                }else{
-                   JOptionPane.showMessageDialog(null,"Subject name already exsist.","ALERT",JOptionPane.WARNING_MESSAGE); 
+                session.save(new Subject(count,name,a,field));
+                session.getTransaction().commit();
+                session.close();
+                this.jTextField1.setText("");
+                jLabel6.setText("Submit sccessful");
                 
-                }
-                    
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(AddSubject.class.getName()).log(Level.SEVERE, null, ex);
+            }else{
+                JOptionPane.showMessageDialog(null,"Subject name already exsist.","ALERT",JOptionPane.WARNING_MESSAGE);
             }
-
-        } else {
+            
+        }else{
             JOptionPane.showMessageDialog(null, "Please enter subject name", "ALERT", JOptionPane.WARNING_MESSAGE);
         }
+        
+//        if (name != null) {
+//            try {
+//                Statement stmnt1 = con.createStatement();
+//                ResultSet result1 = stmnt1.executeQuery("select count(subject_id) from subject");
+//                if (result1.next()) {
+//                    String count = result1.getString("count(subject_id)");
+//                    
+//                    String key = name;
+//                    count = (Integer.parseInt(count) + 1) + "";
+//                    key = key + count;
+//                    
+//                    String sql ="INSERT into subject VALUES"+"(?,?,?,?)";
+//                    String sql1 = "SELECT subject_name from subject WHERE subject_name=?";
+//                
+//                PreparedStatement pre=con.prepareStatement(sql);
+//                PreparedStatement pre1=con.prepareStatement(sql1);
+//                
+//                pre1.setString(1,name);
+//                ResultSet names = pre1.executeQuery();
+//                if(names.next()==false){
+//                    pre.setString(1,key);
+//                    pre.setString(2,name);
+//                    pre.setByte(3, a);
+//                    pre.setString(4,field);
+//                    pre.executeUpdate();
+//                    this.jTextField1.setText("  ");
+//                    jLabel6.setText("Submit sccessful");
+//                }else{
+//                   JOptionPane.showMessageDialog(null,"Subject name already exsist.","ALERT",JOptionPane.WARNING_MESSAGE); 
+//                
+//                }
+//                    
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(AddSubject.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Please enter subject name", "ALERT", JOptionPane.WARNING_MESSAGE);
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

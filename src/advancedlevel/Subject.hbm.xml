@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 4, 2014 11:28:55 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="advancedlevel.Subject" table="subject" catalog="results_management">
+        <id name="subjectId" type="string">
+            <column name="subject_id" length="10" />
+            <generator class="assigned" />
+        </id>
+        <property name="subjectName" type="string">
+            <column name="subject_name" length="45" not-null="true">
+                <comment>name of the subject</comment>
+            </column>
+        </property>
+        <property name="main" type="binary">
+            <column name="main" not-null="true">
+                <comment>checks whether the subject is main( relevant fo z score calculation)</comment>
+            </column>
+        </property>
+        <property name="fieldName" type="string">
+            <column name="field_name" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

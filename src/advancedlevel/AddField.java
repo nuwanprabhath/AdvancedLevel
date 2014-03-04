@@ -14,9 +14,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  *
@@ -158,10 +163,11 @@ public class AddField extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -179,55 +185,45 @@ public class AddField extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        java.sql.Date sqlDate = null;
-        try {
-            java.util.Date invoiceDate = formatDate.parse(jTextField2.getText());
-            sqlDate = new java.sql.Date(invoiceDate.getTime());
-            //System.out.println(sqlDate);
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(null, "Please enter date in correct format", "ALERT", JOptionPane.WARNING_MESSAGE);
-
-            //Logger.getLogger(AddField.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         String name = jTextField1.getText();
         String des = jTextArea1.getText();
 
-        if (name != null && des != null && sqlDate != null) {
-
-
+        if (name.isEmpty() == false && des.isEmpty() == false) {
+            java.sql.Date sqlDate = null;
             try {
-                String sql1 = "SELECT field_name from field WHERE field_name=?";
-                PreparedStatement pre1 = con.prepareStatement(sql1);
-                pre1.setString(1,name);
-                ResultSet result = pre1.executeQuery();
-                if (result.next()== false) {
-                    String sql = "INSERT into field VALUES" + "(?,?,?)";
-                    PreparedStatement pre = con.prepareStatement(sql);
-                    pre.setString(1, name);
-                    pre.setString(2, des);
-                    pre.setDate(3, sqlDate);
-                    pre.executeUpdate();
-                    this.jLabel6.setText("Action sccessful");
-                    this.jTextArea1.setText(" ");
-                    this.jTextField1.setText(" ");
-                    this.jTextField2.setText("");
-                    
-                } else {
-                    JOptionPane.showMessageDialog(null, "Field name already exsists", "ALERT", JOptionPane.WARNING_MESSAGE);
-                }
+                java.util.Date invoiceDate = formatDate.parse(jTextField2.getText());
+                sqlDate = new java.sql.Date(invoiceDate.getTime());
+
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "Please enter date in correct format", "ALERT", JOptionPane.WARNING_MESSAGE);
             }
-            catch (SQLException ex) {
+            
+            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            
+            Query query = session.createQuery("from Field where fieldName = :code ");
+            query.setParameter("code",name);
+            List result1 = query.list();
+            if(((List<Field>) result1).isEmpty()){
                 
-                Logger.getLogger(AddField.class.getName()).log(Level.SEVERE, null, ex);
+                session.save(new Field(name,des,sqlDate));
+                session.getTransaction().commit();
+                session.close();
+                
+                this.jLabel6.setText("Action sccessful");
+                this.jTextArea1.setText("");
+                this.jTextField1.setText("");
+                this.jTextField2.setText("");
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Duplicate field name", "ALERT", JOptionPane.WARNING_MESSAGE);
             }
-
-
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Please fill required fields", "ALERT", JOptionPane.WARNING_MESSAGE);
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Please enter all data", "ALERT", JOptionPane.WARNING_MESSAGE);
         }
-
 
 
 

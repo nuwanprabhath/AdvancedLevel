@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 4, 2014 11:26:41 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="advancedlevel.Field" table="field" catalog="results_management">
+        <id name="fieldName" type="string">
+            <column name="field_name" length="45" />
+            <generator class="assigned" />
+        </id>
+        <property name="description" type="string">
+            <column name="description" length="65535" />
+        </property>
+        <property name="startedDate" type="date">
+            <column name="started_date" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

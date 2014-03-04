@@ -6,13 +6,12 @@ package advancedlevel;
 
 //Exam center information
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.swing.JOptionPane;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  *
@@ -147,38 +146,33 @@ public class AddExamCenter extends javax.swing.JFrame {
         String name = this.jTextField1.getText();
         String add = this.jTextArea1.getText();
 
-        if (name != null && add != null) {
-            try {
-                Statement stmnt1 = con.createStatement();
-                ResultSet result1 = stmnt1.executeQuery("select count(exam_center_id) from exam_center");
-                if (result1.next()) {
-                    String count = result1.getString("count(exam_center_id)");
-                    String key = "";
-                    count = (Integer.parseInt(count) + 1) + "";
-                    key = count;
-
-                    String sql = "INSERT into subject VALUES" + "(?,?,?)";
-                    String sql1 = "SELECT exam_center_name from subject WHERE exam_center_name=?";
-
-                    PreparedStatement pre = con.prepareStatement(sql);
-                    PreparedStatement pre1 = con.prepareStatement(sql1);
-                    pre1.setString(1,name);
-                    ResultSet names = pre1.executeQuery();
-                    if(names.next()==false){
-                        pre.setString(1,key);
-                        pre.setString(2,name);
-                        pre.setString(3, add);
-                        pre.executeUpdate();
-                        this.jTextField1.setText("  ");
-                        jLabel5.setText("Submit sccessful");
-                    }else{
-                       JOptionPane.showMessageDialog(null,"Subject name already exsist.","ALERT",JOptionPane.WARNING_MESSAGE); 
-                    
-                    }    
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(AddExamCenter.class.getName()).log(Level.SEVERE, null, ex);    
+        if (name.isEmpty()==false && add.isEmpty()==false) {
+            
+            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            
+            Query query = session.createQuery("from ExamCenter where examCenterName = :code ");
+            query.setParameter("code",name);
+            List result1 = query.list();
+            
+            if(((List<ExamCenter>) result1).isEmpty()){
+                
+                List result = session.createQuery("from ExamCenter").list();
+                String count=(((List<ExamCenter>)result).size()+1)+"";
+                session.save(new ExamCenter(count,name,add));
+                
+                session.getTransaction().commit();
+                session.close();
+                
+                this.jTextField1.setText("");
+                this.jTextArea1.setText("");
+                jLabel5.setText("Submit sccessful");
+            
+            }else{
+                JOptionPane.showMessageDialog(null, "Duplicate exam center name", "ALERT", JOptionPane.WARNING_MESSAGE);
             }
+            
 
         } else {
             JOptionPane.showMessageDialog(null, "Please fill all required fields.", "ALERT", JOptionPane.WARNING_MESSAGE);

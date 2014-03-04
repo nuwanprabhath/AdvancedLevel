@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 4, 2014 10:34:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="advancedlevel.ExamCenter" table="exam_center" catalog="results_management">
+        <id name="examCenterId" type="string">
+            <column name="exam_center_id" length="45" />
+            <generator class="assigned" />
+        </id>
+        <property name="examCenterName" type="string">
+            <column name="exam_center_name" length="45" not-null="true" />
+        </property>
+        <property name="examCenterAddress" type="string">
+            <column name="exam_center_address" length="65535" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
