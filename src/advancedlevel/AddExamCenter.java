@@ -4,6 +4,7 @@
  */
 package advancedlevel;
 
+//Exam center information
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
