@@ -8,5 +8,7 @@
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.query.factory_class">org.hibernate.hql.ast.ASTQueryTranslatorFactory</property>
+    <mapping resource="advancedlevel/District.hbm.xml"/>
+    <mapping resource="advancedlevel/School.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

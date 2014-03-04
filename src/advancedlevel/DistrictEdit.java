@@ -9,10 +9,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.accessibility.AccessibleContext;
 import javax.swing.JOptionPane;                 // To get popup message 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  *
@@ -24,16 +29,17 @@ public class DistrictEdit extends javax.swing.JFrame {
      * Creates new form DistrictEdit
      */
     private Connection con;
+
     public DistrictEdit(String user) {
         initComponents();
-        if(user!=null){
+        if (user != null) {
             this.jLabel4.setText(user);
             con = UserDatabaseConnection.getDatabaseConnection().getConnectin(user);
-        }else{
+        } else {
             jLabel4.setText("Not logged");
         }
-      
-       
+
+
     }
 
     /**
@@ -151,43 +157,39 @@ public class DistrictEdit extends javax.swing.JFrame {
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            Statement stmnt1 = con.createStatement();
-            ResultSet result1 = stmnt1.executeQuery("select count(district_id) from district");
-            
-            if(result1.next()){
-                String count = result1.getString("count(district_id)");
-                String disName=this.jTextField1.getText();
-                String key=disName.substring(0,3);
-                count=(Integer.parseInt(count)+1)+"";
-                key=key+count;
+
+        String disName = this.jTextField1.getText();
+        if (disName.isEmpty()==false) {
+            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+
+            Query query = session.createQuery("from District where districtName = :code ");
+            query.setParameter("code",disName);
+            List result1 = query.list();
+            if(((List<District>) result1).isEmpty()){
                 
-                String sql ="INSERT into district VALUES"+"(?,?)";
-                String sql1 = "SELECT district_name from district WHERE district_name=?";
+                List result = session.createQuery("from District").list();
+                String count=(((List<District>)result).size()+1)+"";
+                session.save(new District(count,disName));
                 
-                PreparedStatement pre=con.prepareStatement(sql);
-                PreparedStatement pre1=con.prepareStatement(sql1);
+                session.getTransaction().commit();
+                session.close();
+                this.jLabel5.setText("Action successful");
+                this.jTextField1.setText("");
                 
-                pre1.setString(1,disName);
-                ResultSet names = pre1.executeQuery();
-                if(names.next()==false){
-                    pre.setString(1,key);
-                    pre.setString(2,disName);
-                    pre.executeUpdate();
-                    this.jTextField1.setText("  ");
-                    jLabel5.setText("Submit sccessful");
-                }else{
-                   JOptionPane.showMessageDialog(null,"District name already exsist.","ALERT",JOptionPane.WARNING_MESSAGE); 
-                
-                }
-                
+            }else{
+                JOptionPane.showMessageDialog(null, "Duplicate district name", "ALERT", JOptionPane.WARNING_MESSAGE);
             }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(DistrictEdit.class.getName()).log(Level.SEVERE, null, ex);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter district name", "ALERT", JOptionPane.WARNING_MESSAGE);
         }
+
+
         
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 4, 2014 6:30:25 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="advancedlevel.District" table="district" catalog="results_management">
+        <id name="districtId" type="string">
+            <column name="district_id" length="10" />
+            <generator class="assigned" />
+        </id>
+        <property name="districtName" type="string">
+            <column name="district_name" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

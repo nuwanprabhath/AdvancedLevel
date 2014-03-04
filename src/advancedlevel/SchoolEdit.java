@@ -9,9 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  *
@@ -24,39 +29,41 @@ public class SchoolEdit extends javax.swing.JFrame {
      */
     private Connection con;
     private String currentAdd;
-    
+    private School currentScl;
+
     public SchoolEdit(String user) {
         initComponents();
-        if(user!=null){
-            this.jLabel7.setText("Logged in as: "+user);
-            this.jLabel8.setText("Logged in as: "+user);
+        if (user != null) {
+            this.jLabel7.setText("Logged in as: " + user);
+            this.jLabel8.setText("Logged in as: " + user);
             con = UserDatabaseConnection.getDatabaseConnection().getConnectin(user);
-        }else{
+        } else {
             jLabel7.setText("Not logged");
             jLabel8.setText("Not logged");
         }
-        
+
         updateCombo();
-        
-        
+
+
     }
-    
-    private void updateCombo(){
-        
+
+    private void updateCombo() {
+
         this.jComboBox1.removeAllItems();
-        try {
-            Statement stmnt2 = con.createStatement();
-            ResultSet sclList = stmnt2.executeQuery("select school_name,school_address from school"); //to get school list to add in combo box
-            
-            while(sclList.next()){
-                this.jComboBox1.addItem(sclList.getString(1));          //adding schools to combp box
-                
-            }
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(SchoolEdit.class.getName()).log(Level.SEVERE, null, ex);
+
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        List result = session.createQuery("from School").list();
+        for (School dis : (List<School>) result) {
+            this.jComboBox1.addItem(dis.getSchoolName());
         }
+
+        session.getTransaction().commit();
+        session.close();
+
+
     }
 
     /**
@@ -160,7 +167,6 @@ public class SchoolEdit extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -262,10 +268,11 @@ public class SchoolEdit extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3)
+                        .addComponent(jButton4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -290,49 +297,42 @@ public class SchoolEdit extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        try {
-            Statement stmnt1 = con.createStatement();
-            ResultSet result1 = stmnt1.executeQuery("select count(school_id) from school");
-            
-            if(result1.next()){
-                String count = result1.getString("count(school_id)");
-                String sclName=this.jTextField1.getText();
-                String address=this.jTextArea1.getText();
-                
-                String key=sclName.substring(0,3);
-                count=(Integer.parseInt(count)+1)+"";
-                key=key+count;
-                
-                String sql ="INSERT into school VALUES"+"(?,?,?)";
-                String sql1 = "SELECT school_name from school WHERE school_name=?";
-                
-                PreparedStatement pre=con.prepareStatement(sql);
-                PreparedStatement pre1=con.prepareStatement(sql1);
-                
-                pre1.setString(1,sclName);
-                ResultSet names = pre1.executeQuery();
-                if(names.next()==false){
-                    pre.setString(1,key);
-                    pre.setString(2,sclName);
-                    pre.setString(3,address);
-                    pre.executeUpdate();
-                    this.jTextField1.setText("  ");
-                    this.jTextArea1.setText("   ");
-                    jLabel6.setText("Submit sccessful");
-                    this.updateCombo();
-                }else{
-                   JOptionPane.showMessageDialog(null,"School name already exsist.","ALERT",JOptionPane.WARNING_MESSAGE); 
-                
-                }
-                
+
+        String sclName = this.jTextField1.getText();
+        String address = this.jTextArea1.getText();
+
+        if (sclName.isEmpty() == false && address.isEmpty() == false) {
+
+            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+
+            Query query = session.createQuery("from School where schoolName = :code ");
+            query.setParameter("code", sclName);
+            List result1 = query.list();
+
+            if (((List<District>) result1).isEmpty()) {
+
+                List result = session.createQuery("from School").list();
+                String count = (((List<School>) result).size() + 1) + "";
+                session.save(new School(count, sclName, address));
+
+                session.getTransaction().commit();
+                session.close();
+
+                this.jTextField1.setText("");
+                this.jTextArea1.setText("");
+                jLabel6.setText("Submit sccessful");
+                this.updateCombo();
+            } else {
+                JOptionPane.showMessageDialog(null, "Duplicate school name", "ALERT", JOptionPane.WARNING_MESSAGE);
             }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(DistrictEdit.class.getName()).log(Level.SEVERE, null, ex);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Please fill all data.", "ALERT", JOptionPane.WARNING_MESSAGE);
         }
-        
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -347,42 +347,40 @@ public class SchoolEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        try {
-            
-            
-            String scl= (String)this.jComboBox1.getSelectedItem();
-            this.jTextField2.setText(scl);
-            
-            String sql="select school_address from school where school_name=?";
-            PreparedStatement pre = con.prepareStatement(sql);
-            pre.setString(1, scl);
-            ResultSet sclAdd=pre.executeQuery();
-            
-            if(sclAdd.next()){
-                this.jTextArea2.setText(sclAdd.getString(1));
-                this.currentAdd=sclAdd.getString(1);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SchoolEdit.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        String scl = (String) this.jComboBox1.getSelectedItem();
+        this.jTextField2.setText(scl);
+
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        Query query = session.createQuery("from School where schoolName = :code ");
+        query.setParameter("code", scl);
+        List result1 = query.list();
+        
+        this.currentScl=((List<School>) result1).get(0);
+        this.jTextArea2.setText(currentScl.getSchoolAddress());
+        session.getTransaction().commit();
+        session.close();
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try {
-            String sql="UPDATE school SET school_name= ? ,school_address= ? WHERE school_address= ?";
-            PreparedStatement pre = con.prepareStatement(sql);
-            pre.setString(1,this.jTextField2.getText());
-            pre.setString(2,this.jTextArea2.getText());
-            pre.setString(3,currentAdd);
-            pre.executeUpdate();
+
+            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            
+            this.currentScl.setSchoolName(this.jTextArea2.getText());
+            this.currentScl.setSchoolAddress(this.jTextArea2.getText());
+            
+            session.update(this.currentScl);
             this.jLabel9.setText("Update sccessful");
-            this.updateCombo();
+            //this.updateCombo();                       //Get Exception 
             
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(SchoolEdit.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            session.getTransaction().commit();
+            session.close();
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
