@@ -12,7 +12,7 @@ public class Subject  implements java.io.Serializable {
      private String subjectId;
      private String subjectName;
      private byte[] main;
-     private String fieldName;
+     private String field;
 
     public Subject() {
     }
@@ -21,7 +21,7 @@ public class Subject  implements java.io.Serializable {
        this.subjectId = subjectId;
        this.subjectName = subjectName;
        this.main = main;
-       this.fieldName = fieldName;
+       this.field = fieldName;
     }
    
     public String getSubjectId() {
@@ -45,12 +45,12 @@ public class Subject  implements java.io.Serializable {
     public void setMain(byte[] main) {
         this.main = main;
     }
-    public String getFieldName() {
-        return this.fieldName;
+    public String getField() {
+        return this.field;
     }
     
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
+    public void setField(String field) {
+        this.field = field;
     }
 
 

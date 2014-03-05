@@ -222,7 +222,7 @@ public class AddSubject extends javax.swing.JFrame {
                 List result = session.createQuery("from Subject").list();
                 String count = (((List<Subject>) result).size() + 1) + "";
                 
-                session.save(new Subject(count,name,a,field));
+                session.save(new Subject(null,name,a,field));
                 session.getTransaction().commit();
                 session.close();
                 this.jTextField1.setText("");

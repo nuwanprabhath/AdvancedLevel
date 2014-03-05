@@ -29,9 +29,9 @@ public class AdvancedLevel {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws NoSuchAlgorithmException {
-        UserDatabaseConnection.getDatabaseConnection().login("al_admin", "al_admin");
+        UserDatabaseConnection.getDatabaseConnection().login("root", "root");
 
-        Connection con1 = UserDatabaseConnection.getDatabaseConnection().getConnectin("al_admin");
+        Connection con1 = UserDatabaseConnection.getDatabaseConnection().getConnectin("root");
 
         //new DistrictEdit("al_admin").setVisible(true);
         //new SchoolEdit("al_admin").setVisible(true);

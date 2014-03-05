@@ -5,6 +5,7 @@
 
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  * Hibernate Utility class with a convenient method to get Session Factory
@@ -20,6 +21,8 @@ public class NewHibernateUtil {
         try {
             // Create the SessionFactory from standard (hibernate.cfg.xml) 
             // config file.
+            //Configuration  configuration = new Configuration().configure( "C:\\Users\\Nikolay_Tkachev\\workspace\\hiberTest\\src\\logic\\hibernate.cfg.xml");
+            System.out.println("heheheheh");
             sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
         } catch (Throwable ex) {
             // Log the exception. 

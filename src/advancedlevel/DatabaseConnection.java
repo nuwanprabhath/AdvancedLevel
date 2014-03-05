@@ -28,7 +28,8 @@ public class DatabaseConnection {
         
         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con=DriverManager.getConnection(dbURL,"root","");
+            con=DriverManager.getConnection(dbURL,"root","root");
+            currentUsers.put("root", con);
             System.out.println("Connection to Db successful");
             
         }
