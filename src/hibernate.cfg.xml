@@ -13,5 +13,8 @@
     <mapping resource="advancedlevel/ExamCenter.hbm.xml"/>
     <mapping resource="advancedlevel/Field.hbm.xml"/>
     <mapping resource="advancedlevel/Subject.hbm.xml"/>
+    <mapping resource="advancedlevel/Student.hbm.xml"/>
+    <mapping resource="advancedlevel/Takes.hbm.xml"/>
+    <mapping resource="advancedlevel/ExamTry.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 5, 2014 2:11:14 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="advancedlevel.Student" table="student" catalog="results_management">
+        <id name="nicNumber" type="string">
+            <column name="NIC_number" length="10" />
+            <generator class="assigned" />
+        </id>
+        <property name="studentName" type="string">
+            <column name="student_name" length="45" not-null="true" />
+        </property>
+        <property name="studentAddress" type="string">
+            <column name="student_address" length="65535" not-null="true" />
+        </property>
+        <property name="birthday" type="date">
+            <column name="birthday" length="10" not-null="true" />
+        </property>
+        <property name="private_" type="binary">
+            <column name="private" not-null="true">
+                <comment>stores whether student applied for the exam through shool</comment>
+            </column>
+        </property>
+        <property name="schoolId" type="string">
+            <column name="school_id" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

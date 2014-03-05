@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 5, 2014 6:51:53 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="advancedlevel.ExamTry" table="exam_try" catalog="results_management">
+        <id name="index" type="string">
+            <column name="index" length="10" />
+            <generator class="assigned" />
+        </id>
+        <property name="year" type="date">
+            <column name="year" length="0" not-null="true" />
+        </property>
+        <property name="attemptNumber" type="int">
+            <column name="attempt_number" not-null="true" />
+        </property>
+        <property name="overallZ" type="java.lang.Double">
+            <column name="overall_z" precision="22" scale="0" />
+        </property>
+        <property name="islandRank" type="java.lang.Integer">
+            <column name="island_rank" />
+        </property>
+        <property name="districtRank" type="java.lang.Integer">
+            <column name="district_rank" />
+        </property>
+        <property name="nicNumber" type="string">
+            <column name="NIC_number" length="10" not-null="true" />
+        </property>
+        <property name="districtId" type="string">
+            <column name="district_id" length="10" not-null="true" />
+        </property>
+        <property name="examCenterId" type="string">
+            <column name="exam_center_id" length="10" not-null="true" />
+        </property>
+        <property name="fieldName" type="string">
+            <column name="field_name" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
