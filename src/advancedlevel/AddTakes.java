@@ -4,14 +4,22 @@
  */
 package advancedlevel;
 
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
 
 /**
  *
@@ -24,6 +32,8 @@ public class AddTakes extends javax.swing.JFrame {
      */
     private int tablePosition = -1;
     List<ExamCenter> centerList;
+    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy");
+    
 
     public AddTakes(String user) {
         initComponents();
@@ -41,7 +51,50 @@ public class AddTakes extends javax.swing.JFrame {
         this.jComboBox3.setEnabled(false);
         this.jButton4.setEnabled(false);
         this.jComboBox4.setEnabled(false);
+        this.jButton6.setEnabled(false);
+
+    }
+    
+    private String createIndex(){
+        String index="";
         
+        java.sql.Date sqlDate = null;
+        Date today = Calendar.getInstance().getTime();
+        Format formatter = new SimpleDateFormat("yyyy");
+        String s = formatter.format(today);
+        System.out.println();
+        java.util.Date invoiceDate;
+        try {
+            invoiceDate = formatDate.parse(s);
+            sqlDate = new java.sql.Date(invoiceDate.getTime());
+        } catch (ParseException ex) {
+            Logger.getLogger(AddTakes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        
+        
+        Query query = session.createQuery("from ExamTry where year = :code1");
+        query.setParameter("code1",sqlDate);
+        List result1 = query.list();
+        session.getTransaction().commit();
+        
+        if(((List<ExamTry>) result1).isEmpty()){
+            index=s+"000000";
+            
+        }else{
+            int count = ((List<ExamTry>) result1).size();
+            
+            
+            for(int i=0;i<6-((count+1)+"").length();i++){
+                index+="0";
+            }
+            index+=(count+1)+"";
+            index=s+index;
+        }
+        return index;
     }
 
     private void updateCombo() {
@@ -59,7 +112,7 @@ public class AddTakes extends javax.swing.JFrame {
         session.getTransaction().commit();
         session.close();
     }
-    
+
     private void updateComboDistrict() {
 
         this.jComboBox4.removeAllItems();
@@ -75,7 +128,7 @@ public class AddTakes extends javax.swing.JFrame {
         session.getTransaction().commit();
         session.close();
     }
-    
+
     private void updateCombo(javax.swing.JComboBox box) {                //initiallizing combo box
 
         box.removeAllItems();
@@ -87,7 +140,7 @@ public class AddTakes extends javax.swing.JFrame {
 
         List result = session.createQuery("from ExamCenter").list();
         for (ExamCenter dis : (List<ExamCenter>) result) {
-            box.addItem(dis.getExamCenterId() + " :" + dis.getExamCenterName());
+            box.addItem(dis.getExamCenterName());
             centerList.add(dis);
         }
 
@@ -127,6 +180,8 @@ public class AddTakes extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox();
+        jButton6 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Register Student");
@@ -227,6 +282,13 @@ public class AddTakes extends javax.swing.JFrame {
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jButton6.setText("Add main field");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -243,7 +305,10 @@ public class AddTakes extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton1)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton1))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel3)
@@ -255,15 +320,16 @@ public class AddTakes extends javax.swing.JFrame {
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                 .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 112, Short.MAX_VALUE)
                                                 .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(34, 34, 34)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton3))))))
+                                        .addGap(28, 28, 28)
+                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jButton3))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(322, 322, 322)
                         .addComponent(jButton4)
@@ -302,13 +368,16 @@ public class AddTakes extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton6))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
@@ -352,7 +421,7 @@ public class AddTakes extends javax.swing.JFrame {
             Query query = session.createQuery("from Student where nicNumber = :code ");
             query.setParameter("code", NIC);
             List result1 = query.list();
-
+            
             if (((List<Student>) result1).isEmpty() == false) {
                 Student st = ((List<Student>) result1).get(0);
 
@@ -364,6 +433,7 @@ public class AddTakes extends javax.swing.JFrame {
                 this.jComboBox3.setEnabled(true);
                 this.jButton4.setEnabled(true);
                 this.jComboBox4.setEnabled(true);
+                this.jButton6.setEnabled(true);
                 this.jLabel6.setText("Student found");
                 this.updateCombo();
                 updateCombo(jComboBox3);
@@ -429,11 +499,80 @@ public class AddTakes extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
-        for(int i=0;i<=tablePosition;i++)
-        {
+        java.sql.Date sqlDate = null;
+        Date today = Calendar.getInstance().getTime();
+        Format formatter = new SimpleDateFormat("yyyy");
+        String s = formatter.format(today);
+        java.util.Date invoiceDate;
+        System.out.println("ddd"+s);
+        try {
+            invoiceDate = formatDate.parse(s);
+            sqlDate = new java.sql.Date(invoiceDate.getTime());
             
+            System.out.println("aaaaaaaaaaaaaaaaa"+sqlDate.toString());
+        } catch (ParseException ex) {
+            Logger.getLogger(AddTakes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        
+        Query query = session.createQuery("from ExamTry where nicNumber = :code1 and year = :code2");
+        query.setParameter("code1",this.jTextField1.getText());
+        query.setParameter("code2",sqlDate);
+        List result1 = query.list();
+        
+        if(((List<ExamTry>) result1).isEmpty()){
+            String index= this.createIndex();                   //Calcuating index
+            System.out.println("iii"+index);
+            Query query1 = session.createQuery("from ExamTry where nicNumber = :code1");
+            query1.setParameter("code1",this.jTextField1.getText());
+            List result2 = query1.list();
+            int examTry=1;
+            if(((List<ExamTry>) result2).isEmpty()==false){      //Calculating exam try
+                examTry=((List<ExamTry>) result2).size()+1;
+            }
+            
+            //gettig District ID
+            
+            Query query2 = session.createQuery("from District where districtName = :code1");
+            query2.setParameter("code1",this.jComboBox4.getSelectedItem().toString());
+            List<District> result3 = query2.list();
+            String districtId=(result3.get(0).getDistrictId());
+            
+            //getting Exam center id
+            Query query3 = session.createQuery("from ExamCenter where examCenterName = :code1");
+            query3.setParameter("code1",this.jComboBox3.getSelectedItem().toString());
+            List<ExamCenter> result4 = query3.list();
+            String examCenterId=(result4.get(0).getExamCenterId());
+            session.getTransaction().commit();
+            
+            //Getting field name
+            String fieldName= this.jLabel11.getText();
+            if(fieldName.isEmpty()==true){
+                JOptionPane.showMessageDialog(null, "Please slect main field", "ALERT", JOptionPane.WARNING_MESSAGE); 
+            }else{
+                
+               session.beginTransaction(); 
+                System.out.println("llll"+index);
+                index="1234567891";
+               ExamTry exTry = new ExamTry(index,sqlDate,examTry,this.jTextField1.getText(),districtId,examCenterId,"science");
+               //ExamTry exTry1=new ExamTry(index,sqlDate,1,"111","1","science"); 
+               session.save(exTry);
+               session.getTransaction().commit();
+                
+            }
+            
+            
+            
+        }else{
+           JOptionPane.showMessageDialog(null, "Student has already regitered to this year", "ALERT", JOptionPane.WARNING_MESSAGE); 
+        }
+
+
+        for (int i = 0; i <= tablePosition; i++) {
             //tempOrder.addItem((String)jTable1.getValueAt(i, 0),(Integer)jTable1.getValueAt(i, 1));
-            
         }
 
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -445,6 +584,11 @@ public class AddTakes extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        String field = (String) this.jComboBox1.getSelectedItem();
+        this.jLabel11.setText(field);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -486,12 +630,14 @@ public class AddTakes extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

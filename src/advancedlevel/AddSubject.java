@@ -235,47 +235,7 @@ public class AddSubject extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Please enter subject name", "ALERT", JOptionPane.WARNING_MESSAGE);
         }
-        
-//        if (name != null) {
-//            try {
-//                Statement stmnt1 = con.createStatement();
-//                ResultSet result1 = stmnt1.executeQuery("select count(subject_id) from subject");
-//                if (result1.next()) {
-//                    String count = result1.getString("count(subject_id)");
-//                    
-//                    String key = name;
-//                    count = (Integer.parseInt(count) + 1) + "";
-//                    key = key + count;
-//                    
-//                    String sql ="INSERT into subject VALUES"+"(?,?,?,?)";
-//                    String sql1 = "SELECT subject_name from subject WHERE subject_name=?";
-//                
-//                PreparedStatement pre=con.prepareStatement(sql);
-//                PreparedStatement pre1=con.prepareStatement(sql1);
-//                
-//                pre1.setString(1,name);
-//                ResultSet names = pre1.executeQuery();
-//                if(names.next()==false){
-//                    pre.setString(1,key);
-//                    pre.setString(2,name);
-//                    pre.setByte(3, a);
-//                    pre.setString(4,field);
-//                    pre.executeUpdate();
-//                    this.jTextField1.setText("  ");
-//                    jLabel6.setText("Submit sccessful");
-//                }else{
-//                   JOptionPane.showMessageDialog(null,"Subject name already exsist.","ALERT",JOptionPane.WARNING_MESSAGE); 
-//                
-//                }
-//                    
-//                }
-//            } catch (SQLException ex) {
-//                Logger.getLogger(AddSubject.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Please enter subject name", "ALERT", JOptionPane.WARNING_MESSAGE);
-//        }
+      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

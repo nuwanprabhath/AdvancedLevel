@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 5, 2014 5:31:51 PM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated Mar 6, 2014 4:19:41 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="advancedlevel.Takes" table="takes" catalog="results_management">
         <composite-id name="id" class="advancedlevel.TakesId">
@@ -12,14 +12,14 @@
                 <column name="index" length="10" />
             </key-property>
         </composite-id>
-        <property name="marks" type="double">
-            <column name="marks" precision="22" scale="0" not-null="true" />
+        <property name="marks" type="java.lang.Double">
+            <column name="marks" precision="22" scale="0" />
         </property>
         <property name="grade" type="string">
             <column name="grade" length="1" />
         </property>
         <property name="presence" type="binary">
-            <column name="presence" not-null="true" />
+            <column name="presence" />
         </property>
         <property name="suspended" type="binary">
             <column name="suspended" />

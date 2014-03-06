@@ -1,5 +1,5 @@
 package advancedlevel;
-// Generated Mar 5, 2014 5:31:51 PM by Hibernate Tools 3.2.1.GA
+// Generated Mar 6, 2014 4:19:40 PM by Hibernate Tools 3.2.1.GA
 
 
 
@@ -10,7 +10,7 @@ public class Takes  implements java.io.Serializable {
 
 
      private TakesId id;
-     private double marks;
+     private Double marks;
      private String grade;
      private byte[] presence;
      private byte[] suspended;
@@ -20,12 +20,10 @@ public class Takes  implements java.io.Serializable {
     }
 
 	
-    public Takes(TakesId id, double marks, byte[] presence) {
+    public Takes(TakesId id) {
         this.id = id;
-        this.marks = marks;
-        this.presence = presence;
     }
-    public Takes(TakesId id, double marks, String grade, byte[] presence, byte[] suspended, Double ZScore) {
+    public Takes(TakesId id, Double marks, String grade, byte[] presence, byte[] suspended, Double ZScore) {
        this.id = id;
        this.marks = marks;
        this.grade = grade;
@@ -41,11 +39,11 @@ public class Takes  implements java.io.Serializable {
     public void setId(TakesId id) {
         this.id = id;
     }
-    public double getMarks() {
+    public Double getMarks() {
         return this.marks;
     }
     
-    public void setMarks(double marks) {
+    public void setMarks(Double marks) {
         this.marks = marks;
     }
     public String getGrade() {
