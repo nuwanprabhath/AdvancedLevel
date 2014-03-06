@@ -1,5 +1,5 @@
 package advancedlevel;
-// Generated Mar 5, 2014 6:51:52 PM by Hibernate Tools 3.2.1.GA
+// Generated Mar 6, 2014 11:09:07 PM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -10,13 +10,13 @@ import java.util.Date;
 public class ExamTry  implements java.io.Serializable {
 
 
-     private String index;
-     private Date year;
+     private String indexNum;
+     private String nic;
+     private Date regYear;
      private int attemptNumber;
      private Double overallZ;
      private Integer islandRank;
      private Integer districtRank;
-     private String nicNumber;
      private String districtId;
      private String examCenterId;
      private String fieldName;
@@ -25,41 +25,48 @@ public class ExamTry  implements java.io.Serializable {
     }
 
 	
-    public ExamTry(String index, Date year, int attemptNumber, String nicNumber, String districtId, String examCenterId, String fieldName) {
-        this.index = index;
-        this.year = year;
+    public ExamTry(String indexNum, String nic, Date regYear, int attemptNumber, String districtId, String examCenterId, String fieldName) {
+        this.indexNum = indexNum;
+        this.nic = nic;
+        this.regYear = regYear;
         this.attemptNumber = attemptNumber;
-        this.nicNumber = nicNumber;
         this.districtId = districtId;
         this.examCenterId = examCenterId;
         this.fieldName = fieldName;
     }
-    public ExamTry(String index, Date year, int attemptNumber, Double overallZ, Integer islandRank, Integer districtRank, String nicNumber, String districtId, String examCenterId, String fieldName) {
-       this.index = index;
-       this.year = year;
+    public ExamTry(String indexNum, String nic, Date regYear, int attemptNumber, Double overallZ, Integer islandRank, Integer districtRank, String districtId, String examCenterId, String fieldName) {
+       this.indexNum = indexNum;
+       this.nic = nic;
+       this.regYear = regYear;
        this.attemptNumber = attemptNumber;
        this.overallZ = overallZ;
        this.islandRank = islandRank;
        this.districtRank = districtRank;
-       this.nicNumber = nicNumber;
        this.districtId = districtId;
        this.examCenterId = examCenterId;
        this.fieldName = fieldName;
     }
    
-    public String getIndex() {
-        return this.index;
+    public String getIndexNum() {
+        return this.indexNum;
     }
     
-    public void setIndex(String index) {
-        this.index = index;
+    public void setIndexNum(String indexNum) {
+        this.indexNum = indexNum;
     }
-    public Date getYear() {
-        return this.year;
+    public String getNic() {
+        return this.nic;
     }
     
-    public void setYear(Date year) {
-        this.year = year;
+    public void setNic(String nic) {
+        this.nic = nic;
+    }
+    public Date getRegYear() {
+        return this.regYear;
+    }
+    
+    public void setRegYear(Date regYear) {
+        this.regYear = regYear;
     }
     public int getAttemptNumber() {
         return this.attemptNumber;
@@ -88,13 +95,6 @@ public class ExamTry  implements java.io.Serializable {
     
     public void setDistrictRank(Integer districtRank) {
         this.districtRank = districtRank;
-    }
-    public String getNicNumber() {
-        return this.nicNumber;
-    }
-    
-    public void setNicNumber(String nicNumber) {
-        this.nicNumber = nicNumber;
     }
     public String getDistrictId() {
         return this.districtId;

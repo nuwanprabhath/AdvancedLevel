@@ -76,7 +76,7 @@ public class AddTakes extends javax.swing.JFrame {
         session.beginTransaction();
         
         
-        Query query = session.createQuery("from ExamTry where year = :code1");
+        Query query = session.createQuery("from ExamTry where regYear = :code1");
         query.setParameter("code1",sqlDate);
         List result1 = query.list();
         session.getTransaction().commit();
@@ -518,15 +518,15 @@ public class AddTakes extends javax.swing.JFrame {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         
-        Query query = session.createQuery("from ExamTry where nicNumber = :code1 and year = :code2");
+        Query query = session.createQuery("from ExamTry where nic = :code1 and regYear = :code2");
         query.setParameter("code1",this.jTextField1.getText());
-        query.setParameter("code2",sqlDate);
+        query.setParameter("code2",sqlDate);  ///
         List result1 = query.list();
         
         if(((List<ExamTry>) result1).isEmpty()){
             String index= this.createIndex();                   //Calcuating index
-            System.out.println("iii"+index);
-            Query query1 = session.createQuery("from ExamTry where nicNumber = :code1");
+           // System.out.println("iii"+index);
+            Query query1 = session.createQuery("from ExamTry where nic = :code1");
             query1.setParameter("code1",this.jTextField1.getText());
             List result2 = query1.list();
             int examTry=1;
@@ -555,12 +555,14 @@ public class AddTakes extends javax.swing.JFrame {
             }else{
                 
                session.beginTransaction(); 
-                System.out.println("llll"+index);
-                index="1234567891";
-               ExamTry exTry = new ExamTry(index,sqlDate,examTry,this.jTextField1.getText(),districtId,examCenterId,"science");
+               //String index="1234567891";
+               ExamTry exTry = new ExamTry(index,this.jTextField1.getText(),sqlDate,examTry,districtId,examCenterId,fieldName);
                //ExamTry exTry1=new ExamTry(index,sqlDate,1,"111","1","science"); 
-               session.save(exTry);
+               //Query query4 = session.createQuery("from ExamTry");
+               //query3.setParameter("code1",this.jComboBox3.getSelectedItem().toString());
+                session.save(exTry);
                session.getTransaction().commit();
+               
                 
             }
             

@@ -1,15 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 5, 2014 6:51:53 PM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated Mar 6, 2014 11:09:07 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="advancedlevel.ExamTry" table="exam_try" catalog="results_management">
-        <id name="index" type="string">
-            <column name="index" length="10" />
+        <id name="indexNum" type="string">
+            <column name="index_num" length="10" />
             <generator class="assigned" />
         </id>
-        <property name="year" type="date">
-            <column name="year" length="0" not-null="true" />
+        <property name="nic" type="string">
+            <column name="NIC" length="10" not-null="true" />
+        </property>
+        <property name="regYear" type="date">
+            <column name="reg_year" length="10" not-null="true" />
         </property>
         <property name="attemptNumber" type="int">
             <column name="attempt_number" not-null="true" />
@@ -22,9 +25,6 @@
         </property>
         <property name="districtRank" type="java.lang.Integer">
             <column name="district_rank" />
-        </property>
-        <property name="nicNumber" type="string">
-            <column name="NIC_number" length="10" not-null="true" />
         </property>
         <property name="districtId" type="string">
             <column name="district_id" length="10" not-null="true" />
