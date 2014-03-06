@@ -199,7 +199,7 @@ public class AddSubject extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String name = jTextField1.getText();
-        String field = (String) jComboBox1.getSelectedItem();
+        //String field = (String) jComboBox1.getSelectedItem();
         
        byte a[]= new byte[1];
         if (jRadioButton1.isSelected()) {
@@ -217,18 +217,25 @@ public class AddSubject extends javax.swing.JFrame {
             Query query = session.createQuery("from Subject where subjectName = :code ");
             query.setParameter("code",name);
             List result1 = query.list();
-            if(((List<Field>) result1).isEmpty()){
+            if(((List<Subject>) result1).isEmpty()){
                 
                 List result = session.createQuery("from Subject").list();
                 String count = (((List<Subject>) result).size() + 1) + "";
                 
-                session.save(new Subject(null,name,a,field));
+                //gets the associated field object from the database according to the user selection
+                Query query2 = session.createQuery("from Field where fieldName = :code ");
+                query2.setParameter("code",jComboBox1.getSelectedItem().toString().trim());
+                List result2 = query2.list();
+                
+                session.save(new Subject(count,name,a,(Field)result2.get(0)));
                 session.getTransaction().commit();
                 session.close();
                 this.jTextField1.setText("");
                 jLabel6.setText("Submit sccessful");
                 
             }else{
+                List<Subject> result2=(List<Subject>) result1;
+                System.out.println(result2.get(0).getField().getFieldName());
                 JOptionPane.showMessageDialog(null,"Subject name already exsist.","ALERT",JOptionPane.WARNING_MESSAGE);
             }
             

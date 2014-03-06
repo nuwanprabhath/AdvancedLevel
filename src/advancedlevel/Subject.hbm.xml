@@ -2,23 +2,23 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 4, 2014 11:28:55 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="results_management" name="advancedlevel.Subject" table="subject">
-    <id name="subjectId" type="string">
-      <column length="10" name="subject_id"/>
-      <generator class="assigned"/>
-    </id>
-    <property name="subjectName" type="string">
-      <column length="45" name="subject_name" not-null="true">
-        <comment>name of the subject</comment>
-      </column>
-    </property>
-    <property name="main" type="binary">
-      <column name="main" not-null="true">
-        <comment>checks whether the subject is main( relevant fo z score calculation)</comment>
-      </column>
-    </property>
-    <property name="field" type="string">
-      <column length="45" name="field_name" not-null="true"/>
-    </property>
-  </class>
+    <class catalog="results_management" name="advancedlevel.Subject" table="subject">
+        <id name="subjectId" type="string">
+            <column length="10" name="subject_id"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="subjectName" type="string">
+            <column length="45" name="subject_name" not-null="true">
+                <comment>name of the subject</comment>
+            </column>
+        </property>
+        <property name="main" type="binary">
+            <column name="main" not-null="true">
+                <comment>checks whether the subject is main( relevant fo z score calculation)</comment>
+            </column>
+        </property>
+        <many-to-one name="field" column="field_name" class="advancedlevel.Field" not-null="true"/>
+    </class>
+  
+    
 </hibernate-mapping>
