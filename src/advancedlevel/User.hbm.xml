@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="advancedlevel.User" table="userinfo">
+        <id name="username" type="string">
+            <column name="username" length="10" />
+            <generator class="assigned" />
+        </id>
+        <property name="type" type="string">
+            <column name="type" length="15" not-null="true" />
+        </property>
+        <property name="passwordHash" type="string">
+            <column name="passwordhash" length="256" not-null="true" />
+        </property>
+      
+    </class>
+  
+</hibernate-mapping>
