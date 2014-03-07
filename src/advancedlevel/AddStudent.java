@@ -54,7 +54,7 @@ public class AddStudent extends javax.swing.JFrame {
     private void updateCombo(javax.swing.JComboBox box) {                //initiallizing combo box
 
         box.removeAllItems();
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -443,7 +443,7 @@ public class AddStudent extends javax.swing.JFrame {
                     a[0] = 0;
                 }
 
-                SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+                SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
                 Session session = sessionFactory.openSession();
                 session.beginTransaction();
                 
@@ -497,7 +497,7 @@ public class AddStudent extends javax.swing.JFrame {
                     a[0] = 0;
                 }
 
-                SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+                SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
                 Session session = sessionFactory.openSession();
                 session.beginTransaction();
 
@@ -542,7 +542,7 @@ public class AddStudent extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         String NIC = jTextField4.getText();
         if (NIC.isEmpty() == false) {
-            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 

@@ -199,7 +199,7 @@ public class AddField extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Please enter date in correct format", "ALERT", JOptionPane.WARNING_MESSAGE);
             }
             
-            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
             Session session = sessionFactory.openSession();
             session.beginTransaction();
             

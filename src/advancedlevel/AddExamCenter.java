@@ -148,7 +148,7 @@ public class AddExamCenter extends javax.swing.JFrame {
 
         if (name.isEmpty()==false && add.isEmpty()==false) {
             
-            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
             Session session = sessionFactory.openSession();
             session.beginTransaction();
             

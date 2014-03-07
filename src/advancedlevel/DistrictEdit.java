@@ -160,7 +160,7 @@ public class DistrictEdit extends javax.swing.JFrame {
 
         String disName = this.jTextField1.getText();
         if (disName.isEmpty()==false) {
-            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 

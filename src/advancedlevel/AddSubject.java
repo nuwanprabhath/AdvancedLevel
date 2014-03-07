@@ -47,7 +47,7 @@ public class AddSubject extends javax.swing.JFrame {
     private void updateCombo() {
 
         this.jComboBox1.removeAllItems();
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -210,7 +210,7 @@ public class AddSubject extends javax.swing.JFrame {
         }
         if(name.isEmpty()==false){
             
-            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
             Session session = sessionFactory.openSession();
             session.beginTransaction();
             

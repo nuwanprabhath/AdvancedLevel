@@ -46,7 +46,7 @@ public class SchoolEdit extends javax.swing.JFrame {
 
         this.jComboBox1.removeAllItems();
 
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -298,7 +298,7 @@ public class SchoolEdit extends javax.swing.JFrame {
 
         if (sclName.isEmpty() == false && address.isEmpty() == false) {
 
-            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 
@@ -346,7 +346,7 @@ public class SchoolEdit extends javax.swing.JFrame {
         String scl = (String) this.jComboBox1.getSelectedItem();
         this.jTextField2.setText(scl);
 
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -363,7 +363,7 @@ public class SchoolEdit extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
             Session session = sessionFactory.openSession();
             session.beginTransaction();
             
