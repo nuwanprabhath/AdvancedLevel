@@ -1,5 +1,5 @@
 package advancedlevel;
-// Generated Mar 6, 2014 4:19:40 PM by Hibernate Tools 3.2.1.GA
+// Generated Mar 7, 2014 9:11:12 AM by Hibernate Tools 3.2.1.GA
 
 
 
@@ -12,8 +12,8 @@ public class Takes  implements java.io.Serializable {
      private TakesId id;
      private Double marks;
      private String grade;
-     private byte[] presence;
-     private byte[] suspended;
+     private Boolean presence;
+     private Boolean suspended;
      private Double ZScore;
 
     public Takes() {
@@ -23,7 +23,7 @@ public class Takes  implements java.io.Serializable {
     public Takes(TakesId id) {
         this.id = id;
     }
-    public Takes(TakesId id, Double marks, String grade, byte[] presence, byte[] suspended, Double ZScore) {
+    public Takes(TakesId id, Double marks, String grade, Boolean presence, Boolean suspended, Double ZScore) {
        this.id = id;
        this.marks = marks;
        this.grade = grade;
@@ -53,18 +53,18 @@ public class Takes  implements java.io.Serializable {
     public void setGrade(String grade) {
         this.grade = grade;
     }
-    public byte[] getPresence() {
+    public Boolean getPresence() {
         return this.presence;
     }
     
-    public void setPresence(byte[] presence) {
+    public void setPresence(Boolean presence) {
         this.presence = presence;
     }
-    public byte[] getSuspended() {
+    public Boolean getSuspended() {
         return this.suspended;
     }
     
-    public void setSuspended(byte[] suspended) {
+    public void setSuspended(Boolean suspended) {
         this.suspended = suspended;
     }
     public Double getZScore() {

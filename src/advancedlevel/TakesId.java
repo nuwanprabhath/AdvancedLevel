@@ -1,5 +1,5 @@
 package advancedlevel;
-// Generated Mar 6, 2014 4:19:40 PM by Hibernate Tools 3.2.1.GA
+// Generated Mar 7, 2014 9:11:12 AM by Hibernate Tools 3.2.1.GA
 
 
 
@@ -10,14 +10,14 @@ public class TakesId  implements java.io.Serializable {
 
 
      private String subjectId;
-     private String index;
+     private String indexNumber;
 
     public TakesId() {
     }
 
-    public TakesId(String subjectId, String index) {
+    public TakesId(String subjectId, String indexNumber) {
        this.subjectId = subjectId;
-       this.index = index;
+       this.indexNumber = indexNumber;
     }
    
     public String getSubjectId() {
@@ -27,12 +27,12 @@ public class TakesId  implements java.io.Serializable {
     public void setSubjectId(String subjectId) {
         this.subjectId = subjectId;
     }
-    public String getIndex() {
-        return this.index;
+    public String getIndexNumber() {
+        return this.indexNumber;
     }
     
-    public void setIndex(String index) {
-        this.index = index;
+    public void setIndexNumber(String indexNumber) {
+        this.indexNumber = indexNumber;
     }
 
 
@@ -43,14 +43,14 @@ public class TakesId  implements java.io.Serializable {
 		 TakesId castOther = ( TakesId ) other; 
          
 		 return ( (this.getSubjectId()==castOther.getSubjectId()) || ( this.getSubjectId()!=null && castOther.getSubjectId()!=null && this.getSubjectId().equals(castOther.getSubjectId()) ) )
- && ( (this.getIndex()==castOther.getIndex()) || ( this.getIndex()!=null && castOther.getIndex()!=null && this.getIndex().equals(castOther.getIndex()) ) );
+ && ( (this.getIndexNumber()==castOther.getIndexNumber()) || ( this.getIndexNumber()!=null && castOther.getIndexNumber()!=null && this.getIndexNumber().equals(castOther.getIndexNumber()) ) );
    }
    
    public int hashCode() {
          int result = 17;
          
          result = 37 * result + ( getSubjectId() == null ? 0 : this.getSubjectId().hashCode() );
-         result = 37 * result + ( getIndex() == null ? 0 : this.getIndex().hashCode() );
+         result = 37 * result + ( getIndexNumber() == null ? 0 : this.getIndexNumber().hashCode() );
          return result;
    }   
 
