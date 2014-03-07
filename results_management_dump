@@ -1,0 +1,261 @@
+-- phpMyAdmin SQL Dump
+-- version 3.5.1
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Mar 07, 2014 at 04:09 AM
+-- Server version: 5.5.24-log
+-- PHP Version: 5.3.13
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `results_management`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `district`
+--
+
+CREATE TABLE IF NOT EXISTS `district` (
+  `district_id` varchar(10) NOT NULL,
+  `district_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`district_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='stores info about each district';
+
+--
+-- Dumping data for table `district`
+--
+
+INSERT INTO `district` (`district_id`, `district_name`) VALUES
+('111', 'Gall'),
+('7', 'Kandy'),
+('8', 'Anuradapura'),
+('Bad4', 'Badulla'),
+('Col2', 'Colombo'),
+('Gam1', 'Gampaha'),
+('Rat3', 'Rathnapura');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_center`
+--
+
+CREATE TABLE IF NOT EXISTS `exam_center` (
+  `exam_center_id` varchar(45) NOT NULL,
+  `exam_center_name` varchar(45) NOT NULL,
+  `exam_center_address` text NOT NULL,
+  PRIMARY KEY (`exam_center_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='stores info about each exam center';
+
+--
+-- Dumping data for table `exam_center`
+--
+
+INSERT INTO `exam_center` (`exam_center_id`, `exam_center_name`, `exam_center_address`) VALUES
+('1', 'Moratuwa', 'Katubadda, Moratuwa'),
+('2', 'Bambalapitiya', 'Bambalapitiya, Colombo');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_try`
+--
+
+CREATE TABLE IF NOT EXISTS `exam_try` (
+  `index_num` varchar(10) NOT NULL,
+  `NIC` varchar(10) NOT NULL,
+  `reg_year` date NOT NULL,
+  `attempt_number` int(11) NOT NULL,
+  `overall_z` double DEFAULT NULL,
+  `island_rank` int(11) DEFAULT NULL,
+  `district_rank` int(11) DEFAULT NULL,
+  `district_id` varchar(10) NOT NULL,
+  `exam_center_id` varchar(10) NOT NULL,
+  `field_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`index_num`),
+  KEY `NIC` (`NIC`),
+  KEY `NIC_2` (`NIC`),
+  KEY `district_id` (`district_id`,`exam_center_id`,`field_name`),
+  KEY `exam_center_id` (`exam_center_id`),
+  KEY `exam_center_id_2` (`exam_center_id`),
+  KEY `field_name` (`field_name`),
+  KEY `field_name_2` (`field_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `field`
+--
+
+CREATE TABLE IF NOT EXISTS `field` (
+  `field_name` varchar(45) NOT NULL,
+  `description` text,
+  `started_date` date NOT NULL,
+  PRIMARY KEY (`field_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `field`
+--
+
+INSERT INTO `field` (`field_name`, `description`, `started_date`) VALUES
+('art', 'art subjects', '2014-03-03'),
+('commerce', 'commerce subjects', '2014-03-03'),
+('science  ', 'science subjects', '2014-03-03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `school`
+--
+
+CREATE TABLE IF NOT EXISTS `school` (
+  `school_id` varchar(10) NOT NULL,
+  `school_name` varchar(45) NOT NULL,
+  `school_address` text NOT NULL,
+  PRIMARY KEY (`school_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='stores information about schools of the participants';
+
+--
+-- Dumping data for table `school`
+--
+
+INSERT INTO `school` (`school_id`, `school_name`, `school_address`) VALUES
+('3', 'Rathnavali', 'Rathnavali, Gampaha'),
+('Ban1', 'BC,Gampaha.', 'BC,Gampaha.'),
+('Roy2', 'Royal College', 'Royal College, Colombo');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student`
+--
+
+CREATE TABLE IF NOT EXISTS `student` (
+  `NIC_number` varchar(10) NOT NULL,
+  `student_name` varchar(45) NOT NULL,
+  `student_address` text NOT NULL,
+  `birthday` date NOT NULL,
+  `private` binary(1) NOT NULL COMMENT 'stores whether student applied for the exam through shool',
+  `school_id` varchar(45) NOT NULL,
+  PRIMARY KEY (`NIC_number`),
+  KEY `school_idx` (`school_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='stores info about each student';
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`NIC_number`, `student_name`, `student_address`, `birthday`, `private`, `school_id`) VALUES
+('1', 'Nuwan', 'Bemmulla', '1991-03-15', '\0', 'Ban1'),
+('920113320', 'Dumindu', 'Rathnapura', '1992-01-11', '\0', 'Roy2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subject`
+--
+
+CREATE TABLE IF NOT EXISTS `subject` (
+  `subject_id` varchar(10) NOT NULL,
+  `subject_name` varchar(45) NOT NULL COMMENT 'name of the subject',
+  `main` binary(1) NOT NULL COMMENT 'checks whether the subject is main( relevant fo z score calculation)',
+  `field_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`subject_id`),
+  KEY `field_idx` (`field_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `subject`
+--
+
+INSERT INTO `subject` (`subject_id`, `subject_name`, `main`, `field_name`) VALUES
+('5', 'maths', '', 'science  '),
+('eng4', 'english', '0', 'art'),
+('IT5', 'IT', '0', 'art'),
+('lit3', 'lit', '1', 'art'),
+('phy2', 'physics', '1', 'science  ');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `takes`
+--
+
+CREATE TABLE IF NOT EXISTS `takes` (
+  `subject_id` varchar(10) NOT NULL,
+  `index_number` varchar(10) NOT NULL,
+  `marks` double DEFAULT NULL,
+  `grade` varchar(1) DEFAULT NULL,
+  `presence` tinyint(1) DEFAULT NULL,
+  `suspended` tinyint(1) DEFAULT NULL,
+  `z_score` double DEFAULT NULL,
+  PRIMARY KEY (`subject_id`,`index_number`),
+  KEY `index_number` (`index_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test`
+--
+
+CREATE TABLE IF NOT EXISTS `test` (
+  `name` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `test`
+--
+
+INSERT INTO `test` (`name`) VALUES
+('nuwan'),
+('kasun');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `exam_try`
+--
+ALTER TABLE `exam_try`
+  ADD CONSTRAINT `exam_try_ibfk_1` FOREIGN KEY (`NIC`) REFERENCES `student` (`NIC_number`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `exam_try_ibfk_2` FOREIGN KEY (`district_id`) REFERENCES `district` (`district_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `exam_try_ibfk_3` FOREIGN KEY (`exam_center_id`) REFERENCES `exam_center` (`exam_center_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `exam_try_ibfk_4` FOREIGN KEY (`field_name`) REFERENCES `field` (`field_name`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `student`
+--
+ALTER TABLE `student`
+  ADD CONSTRAINT `school_id` FOREIGN KEY (`school_id`) REFERENCES `school` (`school_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `subject`
+--
+ALTER TABLE `subject`
+  ADD CONSTRAINT `field_name` FOREIGN KEY (`field_name`) REFERENCES `field` (`field_name`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `takes`
+--
+ALTER TABLE `takes`
+  ADD CONSTRAINT `takes_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `takes_ibfk_2` FOREIGN KEY (`index_number`) REFERENCES `exam_try` (`index_num`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
