@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8cce23f7-73b6-4660-a359-d23ee9fe2cf9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<scriptlet name="scriptlet1" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+	<parameter name="ind_num" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="scl" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="student_num" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select index_number,subject_name,exam_try.field_name,grade,suspended,overall_z,island_rank,district_rank,school.school_name from takes, exam_try, subject,student,school where index_num=index_number and takes.subject_id=subject.subject_id and exam_try.NIC=student.NIC_number and school.school_id=student.school_id and school_name=$P{scl} and index_number Like $P{ind_num}]]>
+	</queryString>
+	<field name="index_number" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="subject_name" class="java.lang.String">
+		<fieldDescription><![CDATA[name of the subject]]></fieldDescription>
+	</field>
+	<field name="field_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="grade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="suspended" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="overall_z" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="island_rank" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="district_rank" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="school_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="232" height="29" uuid="07a4f476-dc81-48d4-bae9-085624cfde3d"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Result Sheet]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="88" y="46" width="100" height="20" uuid="21af3c15-ef69-47dd-98a9-9b3597c9df1a"/>
+				<textFieldExpression><![CDATA[$P{scl}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="46" width="77" height="20" uuid="cdd62e1d-2e20-4590-b9fc-6403265049d4"/>
+				<text><![CDATA[School Name:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="41" width="100" height="20" uuid="05bc710c-a6fe-4efa-9496-d858be33e9de"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[index_number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="41" width="100" height="20" uuid="593e31d3-cba3-44e9-b101-79d5a4d850ca"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[name of the subject]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="232" y="41" width="50" height="20" uuid="4815226c-4f3c-4c4e-9d7a-6fa5ca29e601"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[grade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="295" y="39" width="68" height="20" uuid="b9fef6ef-fae7-4106-bf0c-6291b57146cc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[overall_z]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="473" y="41" width="82" height="20" uuid="89e390dd-ca8b-4cc3-b112-05ad1ebbc809"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[island_rank]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="41" width="100" height="20" uuid="430df2f8-9db6-4457-9b1c-ffac0dd1f03b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[district_rank]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="b2077e9f-b1cd-46b8-8955-bbba34b394d8"/>
+				<textFieldExpression><![CDATA[$F{index_number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="0" width="100" height="20" uuid="8ebc22bf-77ee-45bf-b48c-acfe96c83c03"/>
+				<textFieldExpression><![CDATA[$F{subject_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="0" width="50" height="20" uuid="f9eef70b-8b4d-473a-a25b-8cc31e9c1a61"/>
+				<textFieldExpression><![CDATA[$F{grade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="295" y="0" width="68" height="20" uuid="9f0a0fa4-9e75-40f9-b399-4a32d40d4ca1"/>
+				<textFieldExpression><![CDATA[$F{overall_z}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="473" y="0" width="82" height="20" uuid="394b9898-b911-40af-8359-fc0ec8f4b095"/>
+				<textFieldExpression><![CDATA[$F{island_rank}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="0" width="100" height="20" uuid="1cc8bb46-08fe-4160-8097-d93efdcf2ed5"/>
+				<textFieldExpression><![CDATA[$F{district_rank}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
