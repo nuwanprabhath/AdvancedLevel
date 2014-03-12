@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Nuwan Prabhath
@@ -158,7 +159,7 @@ public class ZExpressionWindow extends javax.swing.JFrame {
             System.out.println(engine.eval(expression));
             
         } catch (ScriptException ex) {
-            Logger.getLogger(ZExpressionWindow.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Please enter expression correctly", "ALERT", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
