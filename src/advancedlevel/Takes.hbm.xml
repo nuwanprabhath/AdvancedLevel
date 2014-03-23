@@ -8,8 +8,8 @@
             <key-property name="subjectId" type="string">
                 <column name="subject_id" length="10" />
             </key-property>
-            <key-property name="indexNumber" type="string">
-                <column name="index_number" length="10" />
+            <key-property name="indexNum" type="string">
+                <column name="index_num" length="10" />
             </key-property>
         </composite-id>
         <property name="marks" type="java.lang.Double">

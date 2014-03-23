@@ -15,7 +15,7 @@ import org.hibernate.cfg.Configuration;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author
  */
 public class SchoolEdit extends javax.swing.JFrame {
 

@@ -25,7 +25,7 @@ import org.hibernate.cfg.Configuration;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author
  */
 public class AddField extends javax.swing.JFrame {
 

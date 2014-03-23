@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author
  */
 public class DatabaseConnection {
     private String  dbURL="jdbc:mysql://localhost:3306/results_management";
@@ -28,13 +28,13 @@ public class DatabaseConnection {
         
         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con=DriverManager.getConnection(dbURL,"root","");
+            con=DriverManager.getConnection(dbURL,"root","root");
             System.out.println("Connection to Db successful");
             
         }
         catch(Exception e)
         {
-            System.out.println("Connection to the database faild!!! ");
+            System.out.println("Connection to the database failed!!! ");
             e.printStackTrace();
             System.exit(0);
         }
@@ -71,7 +71,7 @@ public class DatabaseConnection {
             
             return true;
         } catch (SQLException ex) {
-            System.out.println("Login faild");
+            System.out.println("Login failed");
             return false;
         }
         

@@ -6,14 +6,14 @@ package advancedlevel;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author
  */
-public class StudentRegistarWindow extends javax.swing.JFrame {
+public class StudentRegistrarWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form StudentRegistar
      */
-    public StudentRegistarWindow() {
+    public StudentRegistrarWindow() {
         initComponents();
     }
 
@@ -265,20 +265,20 @@ public class StudentRegistarWindow extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StudentRegistarWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentRegistrarWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StudentRegistarWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentRegistrarWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StudentRegistarWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentRegistrarWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StudentRegistarWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentRegistrarWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StudentRegistarWindow().setVisible(true);
+                new StudentRegistrarWindow().setVisible(true);
             }
         });
     }

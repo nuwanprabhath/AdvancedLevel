@@ -21,7 +21,7 @@ import org.hibernate.cfg.Configuration;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author
  */
 public class DistrictEdit extends javax.swing.JFrame {
 

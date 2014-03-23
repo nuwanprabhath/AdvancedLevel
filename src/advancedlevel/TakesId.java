@@ -10,14 +10,14 @@ public class TakesId  implements java.io.Serializable {
 
 
      private String subjectId;
-     private String indexNumber;
+     private String indexNum;
 
     public TakesId() {
     }
 
-    public TakesId(String subjectId, String indexNumber) {
+    public TakesId(String subjectId, String indexNum) {
        this.subjectId = subjectId;
-       this.indexNumber = indexNumber;
+       this.indexNum = indexNum;
     }
    
     public String getSubjectId() {
@@ -27,12 +27,12 @@ public class TakesId  implements java.io.Serializable {
     public void setSubjectId(String subjectId) {
         this.subjectId = subjectId;
     }
-    public String getIndexNumber() {
-        return this.indexNumber;
+    public String getIndexNum() {
+        return this.indexNum;
     }
     
-    public void setIndexNumber(String indexNumber) {
-        this.indexNumber = indexNumber;
+    public void setIndexNum(String indexNum) {
+        this.indexNum = indexNum;
     }
 
 
@@ -43,14 +43,14 @@ public class TakesId  implements java.io.Serializable {
 		 TakesId castOther = ( TakesId ) other; 
          
 		 return ( (this.getSubjectId()==castOther.getSubjectId()) || ( this.getSubjectId()!=null && castOther.getSubjectId()!=null && this.getSubjectId().equals(castOther.getSubjectId()) ) )
- && ( (this.getIndexNumber()==castOther.getIndexNumber()) || ( this.getIndexNumber()!=null && castOther.getIndexNumber()!=null && this.getIndexNumber().equals(castOther.getIndexNumber()) ) );
+ && ( (this.getIndexNum()==castOther.getIndexNum()) || ( this.getIndexNum()!=null && castOther.getIndexNum()!=null && this.getIndexNum().equals(castOther.getIndexNum()) ) );
    }
    
    public int hashCode() {
          int result = 17;
          
          result = 37 * result + ( getSubjectId() == null ? 0 : this.getSubjectId().hashCode() );
-         result = 37 * result + ( getIndexNumber() == null ? 0 : this.getIndexNumber().hashCode() );
+         result = 37 * result + ( getIndexNum() == null ? 0 : this.getIndexNum().hashCode() );
          return result;
    }   
 

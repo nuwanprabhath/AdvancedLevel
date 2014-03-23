@@ -22,7 +22,7 @@ import org.hibernate.cfg.Configuration;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author
  */
 public class AddTakes extends javax.swing.JFrame {
 
@@ -525,7 +525,7 @@ public class AddTakes extends javax.swing.JFrame {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        Query query = session.createQuery("from ExamTry where nic = :code1 and regYear = :code2");
+        Query query = session.createQuery("from ExamTry where nicNumber = :code1 and regYear = :code2");
         query.setParameter("code1", this.jTextField1.getText());
         query.setParameter("code2", sqlDate);  ///
         List result1 = query.list();
@@ -533,7 +533,7 @@ public class AddTakes extends javax.swing.JFrame {
         if (((List<ExamTry>) result1).isEmpty()) {
             String index = this.createIndex();                   //Calcuating index
             // System.out.println("iii"+index);
-            Query query1 = session.createQuery("from ExamTry where nic = :code1");
+            Query query1 = session.createQuery("from ExamTry where nicNumber = :code1");
             query1.setParameter("code1", this.jTextField1.getText());
             List result2 = query1.list();
             int examTry = 1;
@@ -578,11 +578,11 @@ public class AddTakes extends javax.swing.JFrame {
                     List<Subject> result5 = query4.list();
                     String subjectId = (result5.get(0).getSubjectId());
                     session.save(new Takes(new TakesId(subjectId,index)));
-                    session.getTransaction().commit();
-                    session.close();
+                    
                     this.jLabel12.setText("Action successful");
                 }
-
+                session.getTransaction().commit();
+                session.close();
             }
 
 
@@ -614,6 +614,8 @@ public class AddTakes extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
+        NewHibernateUtil.createSessionFactory("hibernate.cfg.xml");
+        
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 

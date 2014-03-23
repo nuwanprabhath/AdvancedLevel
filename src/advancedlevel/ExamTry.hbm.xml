@@ -8,8 +8,8 @@
             <column name="index_num" length="10" />
             <generator class="assigned" />
         </id>
-        <property name="nic" type="string">
-            <column name="NIC" length="10" not-null="true" />
+        <property name="nicNumber" type="string">
+            <column name="NIC_Number" length="10" not-null="true" />
         </property>
         <property name="regYear" type="date">
             <column name="reg_year" length="10" not-null="true" />

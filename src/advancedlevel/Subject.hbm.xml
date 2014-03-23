@@ -13,7 +13,7 @@
                 <comment>name of the subject</comment>
             </column>
         </property>
-        <property name="main" type="binary">
+        <property name="main" type="java.lang.Boolean">
             <column name="main" not-null="true">
                 <comment>checks whether the subject is main( relevant fo z score calculation)</comment>
             </column>

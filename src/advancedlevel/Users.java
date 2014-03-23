@@ -277,6 +277,7 @@ public class Users extends javax.swing.JDialog {
     
    public static void main(String args[])
     {
+        NewHibernateUtil.createSessionFactory("hibernate.cfg.xml");
         new Users(null,false).setVisible(true);
     }
     

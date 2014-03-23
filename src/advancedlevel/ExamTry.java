@@ -11,7 +11,7 @@ public class ExamTry  implements java.io.Serializable {
 
 
      private String indexNum;
-     private String nic;
+     private String nicNumber;
      private Date regYear;
      private int attemptNumber;
      private Double overallZ;
@@ -27,7 +27,7 @@ public class ExamTry  implements java.io.Serializable {
 	
     public ExamTry(String indexNum, String nic, Date regYear, int attemptNumber, String districtId, String examCenterId, String fieldName) {
         this.indexNum = indexNum;
-        this.nic = nic;
+        this.nicNumber = nic;
         this.regYear = regYear;
         this.attemptNumber = attemptNumber;
         this.districtId = districtId;
@@ -36,7 +36,7 @@ public class ExamTry  implements java.io.Serializable {
     }
     public ExamTry(String indexNum, String nic, Date regYear, int attemptNumber, Double overallZ, Integer islandRank, Integer districtRank, String districtId, String examCenterId, String fieldName) {
        this.indexNum = indexNum;
-       this.nic = nic;
+       this.nicNumber = nic;
        this.regYear = regYear;
        this.attemptNumber = attemptNumber;
        this.overallZ = overallZ;
@@ -54,12 +54,12 @@ public class ExamTry  implements java.io.Serializable {
     public void setIndexNum(String indexNum) {
         this.indexNum = indexNum;
     }
-    public String getNic() {
-        return this.nic;
+    public String getNicNumber() {
+        return this.nicNumber;
     }
     
-    public void setNic(String nic) {
-        this.nic = nic;
+    public void setNicNumber(String nicNumber) {
+        this.nicNumber = nicNumber;
     }
     public Date getRegYear() {
         return this.regYear;

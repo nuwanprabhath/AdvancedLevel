@@ -12,7 +12,7 @@ import org.hibernate.SessionFactory;
 
 /**
  *
- * @author Cosmox Software Developers
+ * @author
  */
 public class Options extends javax.swing.JDialog {
     private User user;

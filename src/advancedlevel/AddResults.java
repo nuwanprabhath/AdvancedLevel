@@ -6,7 +6,7 @@ package advancedlevel;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author
  */
 public class AddResults extends javax.swing.JFrame {
 

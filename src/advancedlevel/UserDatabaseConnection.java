@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author
  */
 public class UserDatabaseConnection {
     

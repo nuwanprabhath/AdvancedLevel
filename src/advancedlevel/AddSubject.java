@@ -21,7 +21,7 @@ import org.hibernate.cfg.Configuration;
 
 /**
  *
- * @author Nuwan Prabhath
+ * @author
  */
 public class AddSubject extends javax.swing.JFrame {
 
@@ -201,11 +201,11 @@ public class AddSubject extends javax.swing.JFrame {
         String name = jTextField1.getText();
         String field = (String) jComboBox1.getSelectedItem();
         
-       byte a[]= new byte[1];
+       boolean a= false;
         if (jRadioButton1.isSelected()) {
-            a[0] = 1;
+            a = true;
         } else {
-            a[0] = 0;
+            a = false;
             
         }
         if(name.isEmpty()==false){
@@ -248,6 +248,8 @@ public class AddSubject extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
+        NewHibernateUtil.createSessionFactory("hibernate.cfg.xml");
+        
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 

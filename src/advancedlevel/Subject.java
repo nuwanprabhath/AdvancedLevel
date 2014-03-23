@@ -11,13 +11,13 @@ public class Subject  implements java.io.Serializable {
 
      private String subjectId;
      private String subjectName;
-     private byte[] main;
+     private boolean main;
      private String fieldName;
 
     public Subject() {
     }
 
-    public Subject(String subjectId, String subjectName, byte[] main, String fieldName) {
+    public Subject(String subjectId, String subjectName, boolean main, String fieldName) {
        this.subjectId = subjectId;
        this.subjectName = subjectName;
        this.main = main;
@@ -38,11 +38,11 @@ public class Subject  implements java.io.Serializable {
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
-    public byte[] getMain() {
+    public boolean getMain() {
         return this.main;
     }
     
-    public void setMain(byte[] main) {
+    public void setMain(boolean main) {
         this.main = main;
     }
     public String getFieldName() {
